@@ -1,0 +1,19 @@
+name: Push to Replicate
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          tool-cache: false
+          docker-images: false
+      - uses: actions/checkout@v4
+      - uses: replicate/setup-cog@v2
+        with:
+          token: ${{ secrets.REPLICATE_API_TOKEN }}
+      - run: cog push r8.im/darkzesperiash/hq-svc

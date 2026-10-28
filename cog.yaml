@@ -1,0 +1,30 @@
+build:
+  gpu: true
+  cuda: "12.1"
+  python_version: "3.11"
+  system_packages:
+    - git
+    - ffmpeg
+    - libsndfile1
+  python_packages:
+    - torch==2.5.1
+    - torchaudio==2.5.1
+    - numpy<2.3
+    - librosa==0.11.0
+    - huggingface_hub==0.26.5
+    - einops
+    - pyyaml
+    - soundfile
+    - scipy
+    - transformers==4.49.0
+    - tqdm
+    - matplotlib
+    - scikit-learn
+    - requests
+    - local-attention
+    - pyworld
+    - setuptools<70
+  run:
+    - command: git clone https://github.com/ShawnPi233/HQ-SVC.git /hqsvc && cd /hqsvc && git checkout 853a18883f6d380d5e9f9b4bf244d602b6d9d320
+    - command: python -c "from huggingface_hub import snapshot_download; snapshot_download(repo_id='shawnpi/HQ-SVC', allow_patterns=['utils/pretrain/*'], local_dir='/hqsvc')"
+predict: "predict.py:Predictor"
