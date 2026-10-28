@@ -6,6 +6,7 @@ build:
     - git
     - ffmpeg
     - libsndfile1
+    - build-essential
   python_packages:
     - torch==2.5.1
     - torchaudio==2.5.1
@@ -22,9 +23,9 @@ build:
     - scikit-learn
     - requests
     - local-attention
-    - pyworld
     - setuptools<70
   run:
+    - command: pip install --no-cache-dir cython && pip install --no-cache-dir --no-binary pyworld --no-build-isolation pyworld==0.3.4 && python -c "import pyworld; print('pyworld ok', pyworld.__version__)"
     - command: git clone https://github.com/ShawnPi233/HQ-SVC.git /hqsvc && cd /hqsvc && git checkout 853a18883f6d380d5e9f9b4bf244d602b6d9d320
     - command: python -c "from huggingface_hub import snapshot_download; snapshot_download(repo_id='shawnpi/HQ-SVC', allow_patterns=['utils/pretrain/*'], local_dir='/hqsvc')"
 predict: "predict.py:Predictor"
